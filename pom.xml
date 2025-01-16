@@ -12,7 +12,7 @@
     <repository>
         <id>central</id>
         <name>hello-world-libs-release</name>
-        <url>http://3.110.193.180:8081/artifactory/hello-world-libs-release</url>
+        <url>http://13.232.166.253:8081/artifactory/hello-world-libs-release</url>
     </repository>
 </distributionManagement>
     <dependencies>

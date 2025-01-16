@@ -120,17 +120,17 @@ jobs:
         run: |
           echo "Deploying to ${{ matrix.environment }}..."
           # Deploy artifact to the appropriate Tomcat server based on the environment
-          if [ "${{ matrix.environment }}" == "staging" ]; then
+          if [ "${{ matrix.environment }}" == "Stage" ]; then
             # Deployment to the staging environment
             cd /opt/apache-tomcat-10.1.34/webapps/
-            curl -L -u "admin:cmVmdGtuOjAxOjE3Njg1ODMyMzQ6NFp5QmdXMzB5bU1YeHJvRlFxZlFpcnZBSnh4" -O "http://13.232.166.253:8082/artifactory/hello-world-libs-release/com/example/my-helloworld/1.0.0.17/my-helloworld-1.0.0.17.war"
+            curl -L -u "admin:cmVmdGtuOjAxOjE3Njg1ODMyMzQ6NFp5QmdXMzB5bU1YeHJvRlFxZlFpcnZBSnh4" -O "http://13.233.138.177:8082/artifactory/hello-world-libs-release/com/example/my-helloworld/1.0.0.17/my-helloworld-1.0.0.17.war"
 
            
-          elif [ "${{ matrix.environment }}" == "production" ]; then
+          elif [ "${{ matrix.environment }}" == "Prod" ]; then
             # Deployment to the production environment (only triggered on master branch)
             if [[ $GITHUB_REF == "refs/heads/master" ]]; then
              cd /opt/apache-tomcat-10.1.34/webapps/
-             curl -L -u "admin:cmVmdGtuOjAxOjE3Njg1ODMyMzQ6NFp5QmdXMzB5bU1YeHJvRlFxZlFpcnZBSnh4" -O "http://13.232.166.253:8082/artifactory/hello-world-libs-release/com/example/my-helloworld/1.0.0.17/my-helloworld-1.0.0.17.war.war"
+             curl -L -u "admin:cmVmdGtuOjAxOjE3Njg1ODMyMzQ6NFp5QmdXMzB5bU1YeHJvRlFxZlFpcnZBSnh4" -O "http://13.233.138.177:8082/artifactory/hello-world-libs-release/com/example/my-helloworld/1.0.0.17/my-helloworld-1.0.0.17.war"
              
             else
               echo "Skipping production deployment: Only from master branch"
@@ -142,7 +142,7 @@ jobs:
   deploy_input_condition:
     # This job will run on the self-hosted runner with the "production" label.
     # Ensure your production runner has the label `production` assigned to it.
-    runs-on: production  # Self-hosted EC2 with Tomcat installed (Production)
+    runs-on: [self-hosted, Prod]  # Self-hosted EC2 with Tomcat installed (Production)
     if: ${{ github.event.inputs.deploy == 'true' }}  # Only runs if the deploy input is set to true from workflow_dispatch
     steps:
       - name: Checkout code

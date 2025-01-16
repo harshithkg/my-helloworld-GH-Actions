@@ -98,6 +98,7 @@ jobs:
     # This job will deploy to both staging and production environments based on the matrix configuration.
     # The staging environment will use the self-hosted runner with the "staging" label.
     # The production environment will use the self-hosted runner with the "production" label.
+    runs-on: [self-hosted, Prod]
     needs: [sonar_analysis, upload_artifact]
     strategy:
       matrix:
